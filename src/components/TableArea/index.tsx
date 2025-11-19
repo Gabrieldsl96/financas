@@ -8,15 +8,15 @@ type Props = {
 
 export const TableArea = ({ list, onDelete }: Props) => {
     return (
-        <div className="w-full overflow-x-auto rounded-[10px] mt-5">
-            <table className="w-full bg-white shadow-[0_0_5px_#ccc] min-w-[600px]">
+        <div className="w-full overflow-x-auto rounded-xl mt-7">
+            <table className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-xl min-w-[600px]">
                 <thead>
-                    <tr className="border-b">
-                        <th className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-left text-xs sm:text-sm font-medium">Data</th>
-                        <th className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-left text-xs sm:text-sm font-medium">Categoria</th>
-                        <th className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-left text-xs sm:text-sm font-medium">Título</th>
-                        <th className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-left text-xs sm:text-sm font-medium">Valor</th>
-                        <th className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-left text-xs sm:text-sm font-medium">Ação</th>
+                    <tr className="border-b border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900/50">
+                        <th className="py-3 sm:py-3.5 px-3 sm:px-4 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-slate-300">Data</th>
+                        <th className="py-3 sm:py-3.5 px-3 sm:px-4 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-slate-300">Categoria</th>
+                        <th className="py-3 sm:py-3.5 px-3 sm:px-4 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-slate-300">Título</th>
+                        <th className="py-3 sm:py-3.5 px-3 sm:px-4 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-slate-300">Valor</th>
+                        <th className="py-3 sm:py-3.5 px-3 sm:px-4 text-left text-xs sm:text-sm font-semibold text-gray-700 dark:text-slate-300">Ação</th>
                     </tr>
                 </thead>
                 <tbody>

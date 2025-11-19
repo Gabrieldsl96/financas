@@ -10,9 +10,9 @@ type Props = {
 }
 
 const colorMap: { [key: string]: string } = {
-    blue: 'bg-blue-600',
-    brown: 'bg-amber-700',
-    green: 'bg-green-600'
+    blue: 'bg-blue-600 dark:bg-blue-700',
+    brown: 'bg-amber-700 dark:bg-amber-800',
+    green: 'bg-green-600 dark:bg-green-700'
 }
 
 export const TableItem = ({ item, index, onDelete }: Props) => {
@@ -20,26 +20,26 @@ export const TableItem = ({ item, index, onDelete }: Props) => {
     const formattedValue = item.value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 
     return (
-        <tr className="border-b hover:bg-gray-50">
-            <td className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-xs sm:text-sm">{formatDate(item.date)}</td>
-            <td className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-xs sm:text-sm">
-                <div className={`inline-block px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-[5px] text-white text-xs sm:text-sm ${categoryColor}`}>
+        <tr className="border-b border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors duration-150">
+            <td className="py-3 sm:py-3.5 px-3 sm:px-4 text-xs sm:text-sm text-gray-800 dark:text-slate-200">{formatDate(item.date)}</td>
+            <td className="py-3 sm:py-3.5 px-3 sm:px-4 text-xs sm:text-sm">
+                <div className={`inline-block px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-md text-white text-xs sm:text-sm font-medium shadow-md ${categoryColor}`}>
                     {categories[item.category].title}
                 </div>
             </td>
-            <td className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none">{item.title}</td>
-            <td className="py-2 sm:py-2.5 px-2 sm:px-2.5 text-xs sm:text-sm">
-                <div className={`${categories[item.category].expense ? 'text-red-600' : 'text-green-600'} font-medium`}>
+            <td className="py-3 sm:py-3.5 px-3 sm:px-4 text-xs sm:text-sm text-gray-800 dark:text-slate-200 truncate max-w-[120px] sm:max-w-none">{item.title}</td>
+            <td className="py-3 sm:py-3.5 px-3 sm:px-4 text-xs sm:text-sm font-semibold">
+                <div className={`${categories[item.category].expense ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}`}>
                     R$ {formattedValue}
                 </div>
             </td>
-            <td className="py-2 sm:py-2.5 px-1 sm:px-2.5">
+            <td className="py-3 sm:py-3.5 px-2 sm:px-4">
                 <button
                     onClick={() => onDelete(index)}
-                    className="p-1 sm:p-1.5 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
+                    className="p-2 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-600/20 rounded-lg transition-all duration-200 hover:scale-110"
                     title="Deletar item"
                 >
-                    <Trash2 size={16} className="sm:w-4.5 sm:h-4.5" />
+                    <Trash2 size={18} className="sm:w-5 sm:h-5" />
                 </button>
             </td>
         </tr>

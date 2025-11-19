@@ -24,20 +24,20 @@ export const InfoArea = ({ currentMonth, onMonthChange, income, expense }: Props
     }
 
     const balance = income - expense;
-    const balanceColor = balance < 0 ? 'text-red-600' : 'text-green-600';
+    const balanceColor = balance < 0 ? 'text-red-500' : 'text-green-500';
 
     return (
-        <div className="w-full bg-white shadow-[0_0_5px_#ccc] rounded-[10px] -mt-[30px] sm:-mt-[35px] md:-mt-[40px] p-3 sm:p-4 md:p-5 flex flex-col md:flex-row items-center gap-4 md:gap-0">
+        <div className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-xl rounded-xl -mt-[30px] sm:-mt-[35px] md:-mt-10 p-4 sm:p-5 md:p-6 flex flex-col md:flex-row items-center gap-6 md:gap-8">
             {/*MonthArea*/}
-            <div className="flex-1 flex items-center justify-between md:justify-center gap-2 w-full md:w-auto">
+            <div className="flex-1 flex items-center justify-between md:justify-center gap-4 w-full md:w-auto">
                 {/*MonthArrow*/}
-                <div className="text-lg sm:text-2xl md:text-[25px] cursor-pointer hover:opacity-70" onClick={handlePrevMonth}>⬅️</div>
+                <button onClick={handlePrevMonth} className="text-2xl sm:text-3xl cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 transform hover:scale-110">⬅️</button>
                 {/*MonthTitle*/}
-                <div className="flex-1 text-center text-sm sm:text-base md:text-base font-medium">{formatCurrentMonth(currentMonth)}</div>
-                <div className="text-lg sm:text-2xl md:text-[25px] cursor-pointer hover:opacity-70" onClick={handleNextMonth}>➡️</div>
+                <div className="flex-1 text-center text-sm sm:text-base md:text-lg font-semibold text-gray-800 dark:text-slate-100">{formatCurrentMonth(currentMonth)}</div>
+                <button onClick={handleNextMonth} className="text-2xl sm:text-3xl cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 transform hover:scale-110">➡️</button>
             </div>
             {/*ResumeArea*/}
-            <div className="flex-2 flex flex-col sm:flex-row w-full md:w-auto gap-2 sm:gap-3 md:gap-0">
+            <div className="flex-2 flex flex-col sm:flex-row w-full md:w-auto gap-3 sm:gap-4 md:gap-6">
                 <ResumeItem title="Receitas" value={income} />
                 <ResumeItem title="Despesas" value={expense} />
                 <ResumeItem title="Balanço" value={balance} color={balanceColor} />
