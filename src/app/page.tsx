@@ -107,13 +107,13 @@ const HomePage = () => {
 
     return (
         <div className="w-full mx-auto">
-            <div className="bg-blue-800 h-[150px] text-center">
-                <h1 className="text-5xl font-bol m-0 p-0 text-white pt-[30px]">Sistema Financeiro</h1>
+            <div className="bg-blue-800 h-[100px] sm:h-[120px] md:h-[150px] text-center flex items-center justify-center">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl font-bol m-0 p-0 text-white px-4">Sistema Financeiro</h1>
             </div>
-            <div className="m-auto max-w-[980px] mb-[50px]">
+            <div className="m-auto max-w-full sm:max-w-full md:max-w-[980px] mb-[50px] px-4 sm:px-6 md:px-0">
                 {loading ? (
                     <div className="w-full text-center py-[50px]">
-                        <p className="text-xl">Carregando dados...</p>
+                        <p className="text-lg sm:text-xl">Carregando dados...</p>
                     </div>
                 ) : (
                     <>
