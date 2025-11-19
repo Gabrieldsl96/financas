@@ -4,21 +4,34 @@ import { InfoArea } from "@/components/InfoArea";
 import { InputArea } from "@/components/InputArea";
 import { TableArea } from "@/components/TableArea";
 import { categories } from "@/data/categories";
-import { Items } from "@/data/items";
 import { filterListByMonth, getCurrentMonth } from "@/helpers/dateFilter";
 import { Item } from "@/types/Item";
 import { Inconsolata } from "next/font/google";
 import { useEffect, useState } from "react";
+import { getAllItems, addItem, deleteItem, ItemWithId } from "@/services/firebaseService";
+import Swal from "sweetalert2";
 
 const HomePage = () => {
-    const [list, setList] = useState(Items);
-    const [filteredList, setFilteredList] = useState<Item[]>([])
+    const [list, setList] = useState<ItemWithId[]>([]);
+    const [filteredList, setFilteredList] = useState<ItemWithId[]>([])
     const [currentMonth, setCurrentMonth] = useState(getCurrentMonth());
     const [income, setIncome] = useState(0);
     const [expense, setExpense] = useState(0);
+    const [loading, setLoading] = useState(true);
+
+    // Carregar itens do Firebase ao montar o componente
+    useEffect(() => {
+        const loadItems = async () => {
+            setLoading(true);
+            const items = await getAllItems();
+            setList(items);
+            setLoading(false);
+        };
+        loadItems();
+    }, []);
 
     useEffect(() => {
-        setFilteredList(filterListByMonth(list, currentMonth))
+        setFilteredList(filterListByMonth(list as any, currentMonth) as any)
     }, [list, currentMonth])
 
     useEffect(() => {
@@ -42,10 +55,54 @@ const HomePage = () => {
         setCurrentMonth(newMonth)
     }
 
-    const handleAddItem = (item: Item) => {
-        let newList = [...list];
-        newList.push(item);
-        setList(newList)
+    const handleAddItem = async (item: Item) => {
+        const docId = await addItem(item);
+        if (docId) {
+            const itemWithId: ItemWithId = { ...item, id: docId };
+            setList([...list, itemWithId]);
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: 'Erro ao adicionar item'
+            });
+        }
+    }
+
+    const handleDeleteItem = async (index: number) => {
+        const itemToDelete = filteredList[index];
+
+        const result = await Swal.fire({
+            icon: 'question',
+            title: 'Tem certeza?',
+            text: 'Este item será deletado permanentemente',
+            showCancelButton: true,
+            confirmButtonText: 'Deletar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280'
+        });
+
+        if (result.isConfirmed) {
+            const success = await deleteItem(itemToDelete.id);
+
+            if (success) {
+                const updatedList = list.filter(item => item.id !== itemToDelete.id);
+                setList(updatedList);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Deletado!',
+                    text: 'Item removido com sucesso',
+                    timer: 1500
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro!',
+                    text: 'Erro ao deletar item'
+                });
+            }
+        }
     }
 
     return (
@@ -54,18 +111,27 @@ const HomePage = () => {
                 <h1 className="text-5xl font-bol m-0 p-0 text-white pt-[30px]">Sistema Financeiro</h1>
             </div>
             <div className="m-auto max-w-[980px] mb-[50px]">
-                <InfoArea
-                    currentMonth={currentMonth}
-                    onMonthChange={handleMonthChange}
-                    income={income}
-                    expense={expense}
-                />
-                <InputArea
-                    onAdd={handleAddItem}
-                />
-                <TableArea
-                    list={filteredList}
-                />
+                {loading ? (
+                    <div className="w-full text-center py-[50px]">
+                        <p className="text-xl">Carregando dados...</p>
+                    </div>
+                ) : (
+                    <>
+                        <InfoArea
+                            currentMonth={currentMonth}
+                            onMonthChange={handleMonthChange}
+                            income={income}
+                            expense={expense}
+                        />
+                        <InputArea
+                            onAdd={handleAddItem}
+                        />
+                        <TableArea
+                            list={filteredList}
+                            onDelete={handleDeleteItem}
+                        />
+                    </>
+                )}
             </div>
         </div>
     )

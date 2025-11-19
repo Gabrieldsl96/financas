@@ -1,8 +1,8 @@
 export const firebaseConfig = {
-    apiKey: "AIzaSyAlBHkGm5szJVBP80LXxRtnRzxuhfg7XYs",
-    authDomain: "financas-63361.firebaseapp.com",
-    projectId: "financas-63361",
-    storageBucket: "financas-63361.firebasestorage.app",
-    messagingSenderId: "450532546062",
-    appId: "1:450532546062:web:b5d2e969f2a7c1f607ce5f"
+    apiKey: process.env.NEXT_PUBLIC_API_KEY!,
+    authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN!,
+    projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
+    storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET!,
+    messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID!,
+    appId: process.env.NEXT_PUBLIC_APP_ID!,
 };
