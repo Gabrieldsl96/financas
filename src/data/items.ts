@@ -20,7 +20,7 @@ export const Items: Item[] = [
         value: 32.12
     },
     {
-        date: new Date(2021, 10, 18),
+        date: new Date(2025, 11, 18),
         category: 'salary',
         title: 'Salario',
         value: 4500
